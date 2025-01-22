@@ -1,16 +1,31 @@
-<p style="color: green"><%= notice %></p>
+<h1 class="mb-4">🚗 Список машин</h1>
 
-<% content_for :title, "Cars" %>
+<table class="table table-striped">
+  <thead class="table-dark">
+    <tr>
+      <th>Марка</th>
+      <th>Модель</th>
+      <th>Гос. номер</th>
+      <th>Год</th>
+      <th>Статус</th>
+      <th>Действия</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @cars.each do |car| %>
+      <tr>
+        <td><%= car.brand %></td>
+        <td><%= car.model %></td>
+        <td><%= car.plate_number %></td>
+        <td><%= car.year %></td>
+        <td><%= car.status ? "✅ Активна" : "❌ Неактивна" %></td>
+        <td>
+          <%= link_to "Редактировать", edit_car_path(car), class: "btn btn-warning btn-sm" %>
+          <%= link_to "Удалить", car, method: :delete, data: { confirm: "Вы уверены?" }, class: "btn btn-danger btn-sm" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
-<h1>Cars</h1>
-
-<div id="cars">
-  <% @cars.each do |car| %>
-    <%= render car %>
-    <p>
-      <%= link_to "Show this car", car %>
-    </p>
-  <% end %>
-</div>
-
-<%= link_to "New car", new_car_path %>
+<%= link_to "Добавить машину", new_car_path, class: "btn btn-success mt-3" %>

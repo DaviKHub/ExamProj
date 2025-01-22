@@ -1,16 +1,29 @@
-<p style="color: green"><%= notice %></p>
+<h1 class="mb-4">🚕 Список водителей</h1>
 
-<% content_for :title, "Drivers" %>
+<table class="table table-striped">
+  <thead class="table-dark">
+    <tr>
+      <th>Имя</th>
+      <th>Номер лицензии</th>
+      <th>Телефон</th>
+      <th>Машина</th>
+      <th>Действия</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @drivers.each do |driver| %>
+      <tr>
+        <td><%= driver.name %></td>
+        <td><%= driver.license_number %></td>
+        <td><%= driver.phone %></td>
+        <td><%= driver.car ? "#{driver.car.brand} #{driver.car.model} (#{driver.car.plate_number})" : "🚫 Нет машины" %></td>
+        <td>
+          <%= link_to "Редактировать", edit_driver_path(driver), class: "btn btn-warning btn-sm" %>
+          <%= link_to "Удалить", driver, method: :delete, data: { confirm: "Вы уверены?" }, class: "btn btn-danger btn-sm" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
-<h1>Drivers</h1>
-
-<div id="drivers">
-  <% @drivers.each do |driver| %>
-    <%= render driver %>
-    <p>
-      <%= link_to "Show this driver", driver %>
-    </p>
-  <% end %>
-</div>
-
-<%= link_to "New driver", new_driver_path %>
+<%= link_to "Добавить водителя", new_driver_path, class: "btn btn-success mt-3" %>

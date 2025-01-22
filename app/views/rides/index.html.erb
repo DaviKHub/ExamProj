@@ -1,16 +1,41 @@
-<p style="color: green"><%= notice %></p>
+<h1 class="mb-4">🏁 Список поездок</h1>
 
-<% content_for :title, "Rides" %>
+<table class="table table-striped">
+  <thead class="table-dark">
+    <tr>
+      <th>Клиент</th>
+      <th>Машина</th>
+      <th>Место посадки</th>
+      <th>Место высадки</th>
+      <th>Стоимость</th>
+      <th>Статус</th>
+      <th>Действия</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @rides.each do |ride| %>
+      <tr>
+        <td><%= ride.client.name %></td>
+        <td><%= ride.car ? "#{ride.car.brand} #{ride.car.model} (#{ride.car.plate_number})" : "🚫 Нет машины" %></td>
+        <td><%= ride.pickup_location %></td>
+        <td><%= ride.dropoff_location %></td>
+        <td><%= ride.fare %> ₽</td>
+        <td>
+          <% if ride.status == "completed" %>
+            <span class="badge bg-success">Завершена</span>
+          <% elsif ride.status == "pending" %>
+            <span class="badge bg-warning text-dark">В ожидании</span>
+          <% else %>
+            <span class="badge bg-danger">Отменена</span>
+          <% end %>
+        </td>
+        <td>
+          <%= link_to "Редактировать", edit_ride_path(ride), class: "btn btn-warning btn-sm" %>
+          <%= link_to "Удалить", ride, method: :delete, data: { confirm: "Вы уверены?" }, class: "btn btn-danger btn-sm" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
-<h1>Rides</h1>
-
-<div id="rides">
-  <% @rides.each do |ride| %>
-    <%= render ride %>
-    <p>
-      <%= link_to "Show this ride", ride %>
-    </p>
-  <% end %>
-</div>
-
-<%= link_to "New ride", new_ride_path %>
+<%= link_to "Добавить поездку", new_ride_path, class: "btn btn-success mt-3" %>

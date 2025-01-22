@@ -1,16 +1,25 @@
-<p style="color: green"><%= notice %></p>
+<h1 class="mb-4">👥 Список клиентов</h1>
 
-<% content_for :title, "Clients" %>
+<table class="table table-striped">
+  <thead class="table-dark">
+    <tr>
+      <th>Имя</th>
+      <th>Телефон</th>
+      <th>Действия</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @clients.each do |client| %>
+      <tr>
+        <td><%= client.name %></td>
+        <td><%= client.phone %></td>
+        <td>
+          <%= link_to "Редактировать", edit_client_path(client), class: "btn btn-warning btn-sm" %>
+          <%= link_to "Удалить", client, method: :delete, data: { confirm: "Вы уверены?" }, class: "btn btn-danger btn-sm" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
-<h1>Clients</h1>
-
-<div id="clients">
-  <% @clients.each do |client| %>
-    <%= render client %>
-    <p>
-      <%= link_to "Show this client", client %>
-    </p>
-  <% end %>
-</div>
-
-<%= link_to "New client", new_client_path %>
+<%= link_to "Добавить клиента", new_client_path, class: "btn btn-success mt-3" %>
