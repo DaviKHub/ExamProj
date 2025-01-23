@@ -1,31 +1,25 @@
 <h1 class="mb-4">🚗 Список машин</h1>
 
-<table class="table table-striped">
-  <thead class="table-dark">
-    <tr>
-      <th>Марка</th>
-      <th>Модель</th>
-      <th>Гос. номер</th>
-      <th>Год</th>
-      <th>Статус</th>
-      <th>Действия</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @cars.each do |car| %>
-      <tr>
-        <td><%= car.brand %></td>
-        <td><%= car.model %></td>
-        <td><%= car.plate_number %></td>
-        <td><%= car.year %></td>
-        <td><%= car.status ? "✅ Активна" : "❌ Неактивна" %></td>
-        <td>
-          <%= link_to "Редактировать", edit_car_path(car), class: "btn btn-warning btn-sm" %>
-          <%= link_to "Удалить", car, method: :delete, data: { confirm: "Вы уверены?" }, class: "btn btn-danger btn-sm" %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="row">
+  <% @cars.each do |car| %>
+    <div class="col-md-6">
+      <div class="card p-3 mb-4">
+        <div class="card-body">
+          <h5 class="card-title"><%= car.brand %> <%= car.model %></h5>
+          <p class="card-text">
+            <strong>Гос. номер:</strong> <%= car.plate_number %> <br>
+            <strong>Год:</strong> <%= car.year %>
+          </p>
+          <div class="d-flex justify-content-between">
+            <%= link_to "Редактировать", edit_car_path(car), class: "btn btn-warning btn-sm" %>
+            <%= link_to "Удалить", car, method: :delete, data: { confirm: "Вы уверены?" }, class: "btn btn-danger btn-sm" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
 
-<%= link_to "Добавить машину", new_car_path, class: "btn btn-success mt-3" %>
+<div class="mt-4">
+  <%= link_to "➕ Добавить машину", new_car_path, class: "btn btn-success" %>
+</div>

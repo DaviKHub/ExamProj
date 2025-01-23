@@ -1,17 +1,37 @@
-<%= form_with(model: driver) do |form| %>
+<%= form_with(model: driver, local: true, class: "driver-form") do |f| %>
   <% if driver.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(driver.errors.count, "error") %> prohibited this driver from being saved:</h2>
-
+    <div class="alert alert-danger">
+      <h4>Ошибки при сохранении:</h4>
       <ul>
-        <% driver.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+        <% driver.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div>
-    <%= form.submit %>
+  <div class="mb-3">
+    <%= f.label :name, "Имя водителя" %>
+    <%= f.text_field :name, class: "form-control", placeholder: "Введите имя" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :license_number, "Номер лицензии" %>
+    <%= f.text_field :license_number, class: "form-control", placeholder: "Введите номер лицензии" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :phone, "Телефон" %>
+    <%= f.telephone_field :phone, class: "form-control", placeholder: "Введите телефон" %>
+  </div>
+
+  <div class="mb-3">
+  <%= f.label :car_id, "Назначенная машина (гос. номер)" %>
+  <%= f.collection_select :car_id, Car.all, :id, :plate_number, { include_blank: "Без машины" }, class: "form-select" %>
+</div>
+
+  <div class="mt-4">
+    <%= f.submit "Сохранить", class: "btn btn-success" %>
+    <%= link_to "Отмена", drivers_path, class: "btn btn-secondary" %>
   </div>
 <% end %>

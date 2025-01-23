@@ -23,14 +23,12 @@ class DriversController < ApplicationController
   def create
     @driver = Driver.new(driver_params)
 
-    respond_to do |format|
-      if @driver.save
-        format.html { redirect_to @driver, notice: "Driver was successfully created." }
-        format.json { render :show, status: :created, location: @driver }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @driver.errors, status: :unprocessable_entity }
-      end
+    if @driver.save
+      flash[:success] = "Водитель успешно добавлен!"
+      redirect_to drivers_path
+    else
+      flash.now[:danger] = "Ошибка! Проверьте введенные данные."
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -58,13 +56,14 @@ class DriversController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_driver
-      @driver = Driver.find(params.expect(:id))
-    end
 
-    # Only allow a list of trusted parameters through.
-    def driver_params
-      params.fetch(:driver, {})
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_driver
+    @driver = Driver.find(params.expect(:id))
+  end
+
+  # Only allow a list of trusted parameters through.
+  def driver_params
+    params.require(:driver).permit(:name, :license_number, :phone, :car_id)
+  end
 end

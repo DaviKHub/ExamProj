@@ -1,17 +1,47 @@
-<%= form_with(model: ride) do |form| %>
+<%= form_with(model: ride, local: true, class: "ride-form") do |f| %>
   <% if ride.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(ride.errors.count, "error") %> prohibited this ride from being saved:</h2>
-
+    <div class="alert alert-danger">
+      <h4>Ошибки при сохранении:</h4>
       <ul>
-        <% ride.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+        <% ride.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div>
-    <%= form.submit %>
+  <div class="mb-3">
+    <%= f.label :client_id, "Клиент (по номеру телефона)", class: "form-label" %>
+    <%= f.collection_select :client_id, Client.all, :id, :phone, { include_blank: "Выберите клиента" }, class: "form-select" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :car_id, "Машина (по гос. номеру)", class: "form-label" %>
+    <%= f.collection_select :car_id, Car.all, :id, :plate_number, { include_blank: "Выберите машину" }, class: "form-select" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :pickup_location, "Место посадки", class: "form-label" %>
+    <%= f.text_field :pickup_location, class: "form-control", placeholder: "Введите адрес" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :dropoff_location, "Место высадки", class: "form-label" %>
+    <%= f.text_field :dropoff_location, class: "form-control", placeholder: "Введите адрес" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :fare, "Стоимость (₽)", class: "form-label" %>
+    <%= f.number_field :fare, class: "form-control", placeholder: "Введите стоимость", min: 0, step: 10%>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :status, "Статус поездки", class: "form-label" %>
+    <%= f.select :status, [["В ожидании", "pending"], ["Завершена", "completed"], ["Отменена", "cancelled"]], { include_blank: "Выберите статус" }, class: "form-select" %>
+  </div>
+
+  <div class="mt-4">
+    <%= f.submit "Сохранить", class: "btn btn-success" %>
+    <%= link_to "Отмена", rides_path, class: "btn btn-secondary" %>
   </div>
 <% end %>

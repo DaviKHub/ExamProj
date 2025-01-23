@@ -1,25 +1,24 @@
 <h1 class="mb-4">👥 Список клиентов</h1>
 
-<table class="table table-striped">
-  <thead class="table-dark">
-    <tr>
-      <th>Имя</th>
-      <th>Телефон</th>
-      <th>Действия</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @clients.each do |client| %>
-      <tr>
-        <td><%= client.name %></td>
-        <td><%= client.phone %></td>
-        <td>
-          <%= link_to "Редактировать", edit_client_path(client), class: "btn btn-warning btn-sm" %>
-          <%= link_to "Удалить", client, method: :delete, data: { confirm: "Вы уверены?" }, class: "btn btn-danger btn-sm" %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="row">
+  <% @clients.each do |client| %>
+    <div class="col-md-6">
+      <div class="card p-3 mb-4">
+        <div class="card-body">
+          <h5 class="card-title">👤 <%= client.name %></h5>
+          <p class="card-text">
+            📞 <strong>Телефон:</strong> <%= client.phone %>
+          </p>
+          <div class="d-flex justify-content-between">
+            <%= link_to "Редактировать", edit_client_path(client), class: "btn btn-warning btn-sm" %>
+            <%= link_to "Удалить", client, method: :delete, data: { confirm: "Вы уверены?" }, class: "btn btn-danger btn-sm" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
 
-<%= link_to "Добавить клиента", new_client_path, class: "btn btn-success mt-3" %>
+<div class="mt-4">
+  <%= link_to "➕ Добавить клиента", new_client_path, class: "btn btn-success" %>
+</div>

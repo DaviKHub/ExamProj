@@ -1,12 +1,9 @@
-<% content_for :title, "Editing ride" %>
+<h1 class="mb-4">Редактировать поездку</h1>
 
-<h1>Editing ride</h1>
+<div class="card p-4">
+  <%= render "form", ride: @ride %>
+</div>
 
-<%= render "form", ride: @ride %>
-
-<br>
-
-<div>
-  <%= link_to "Show this ride", @ride %> |
-  <%= link_to "Back to rides", rides_path %>
+<div class="mt-3">
+  <%= link_to "Назад", rides_path, class: "btn btn-outline-primary" %>
 </div>

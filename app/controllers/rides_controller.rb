@@ -58,13 +58,14 @@ class RidesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_ride
-      @ride = Ride.find(params.expect(:id))
-    end
 
-    # Only allow a list of trusted parameters through.
-    def ride_params
-      params.fetch(:ride, {})
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_ride
+    @ride = Ride.find(params.expect(:id))
+  end
+
+  # Only allow a list of trusted parameters through.
+  def ride_params
+    params.require(:ride).permit(:client_id, :car_id, :pickup_location, :dropoff_location, :fare, :status)
+  end
 end

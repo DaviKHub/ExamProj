@@ -1,12 +1,9 @@
-<% content_for :title, "Editing driver" %>
+<h1 class="mb-4">Редактировать водителя</h1>
 
-<h1>Editing driver</h1>
+<div class="card p-4">
+  <%= render "form", driver: @driver %>
+</div>
 
-<%= render "form", driver: @driver %>
-
-<br>
-
-<div>
-  <%= link_to "Show this driver", @driver %> |
-  <%= link_to "Back to drivers", drivers_path %>
+<div class="mt-3">
+  <%= link_to "Назад", drivers_path, class: "btn btn-outline-primary" %>
 </div>

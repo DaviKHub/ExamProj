@@ -1,29 +1,25 @@
-<h1 class="mb-4">🚕 Список водителей</h1>
+<h1 class="mb-4">🚖 Список водителей</h1>
 
-<table class="table table-striped">
-  <thead class="table-dark">
-    <tr>
-      <th>Имя</th>
-      <th>Номер лицензии</th>
-      <th>Телефон</th>
-      <th>Машина</th>
-      <th>Действия</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @drivers.each do |driver| %>
-      <tr>
-        <td><%= driver.name %></td>
-        <td><%= driver.license_number %></td>
-        <td><%= driver.phone %></td>
-        <td><%= driver.car ? "#{driver.car.brand} #{driver.car.model} (#{driver.car.plate_number})" : "🚫 Нет машины" %></td>
-        <td>
-          <%= link_to "Редактировать", edit_driver_path(driver), class: "btn btn-warning btn-sm" %>
-          <%= link_to "Удалить", driver, method: :delete, data: { confirm: "Вы уверены?" }, class: "btn btn-danger btn-sm" %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="row">
+  <% @drivers.each do |driver| %>
+    <div class="col-md-6">
+      <div class="card p-3 mb-4">
+        <div class="card-body">
+          <h5 class="card-title">🚕 <%= driver.name %></h5>
+          <p class="card-text">
+            🪪 <strong>Удостоверение:</strong> <%= driver.license_number %><br>
+            📞 <strong>Телефон:</strong> <%= driver.phone %>
+          </p>
+          <div class="d-flex justify-content-between">
+            <%= link_to "Редактировать", edit_driver_path(driver), class: "btn btn-warning btn-sm" %>
+            <%= link_to "Удалить", driver, method: :delete, data: { confirm: "Вы уверены?" }, class: "btn btn-danger btn-sm" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
 
-<%= link_to "Добавить водителя", new_driver_path, class: "btn btn-success mt-3" %>
+<div class="mt-4">
+  <%= link_to "➕ Добавить водителя", new_driver_path, class: "btn btn-success" %>
+</div>

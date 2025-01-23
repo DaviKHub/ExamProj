@@ -21,16 +21,13 @@ class CarsController < ApplicationController
 
   # POST /cars or /cars.json
   def create
+    Rails.logger.debug "PARAMS RECEIVED: #{params.inspect}" # Выведет параметры в логи
     @car = Car.new(car_params)
 
-    respond_to do |format|
-      if @car.save
-        format.html { redirect_to @car, notice: "Car was successfully created." }
-        format.json { render :show, status: :created, location: @car }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @car.errors, status: :unprocessable_entity }
-      end
+    if @car.save
+      redirect_to cars_path, notice: "Успешно создано."
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -38,7 +35,7 @@ class CarsController < ApplicationController
   def update
     respond_to do |format|
       if @car.update(car_params)
-        format.html { redirect_to @car, notice: "Car was successfully updated." }
+        format.html { redirect_to cars_path, notice: "Успешно обновлено." }
         format.json { render :show, status: :ok, location: @car }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -49,22 +46,30 @@ class CarsController < ApplicationController
 
   # DELETE /cars/1 or /cars/1.json
   def destroy
-    @car.destroy!
+    @car = Car.find(params[:id]) # Убедимся, что объект найден
 
-    respond_to do |format|
-      format.html { redirect_to cars_path, status: :see_other, notice: "Car was successfully destroyed." }
-      format.json { head :no_content }
+    if @car.destroy
+      respond_to do |format|
+        format.html { redirect_to cars_path, notice: "Машина успешно удалена." }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to cars_path, alert: "Ошибка при удалении машины." }
+        format.json { render json: @car.errors, status: :unprocessable_entity }
+      end
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_car
-      @car = Car.find(params.expect(:id))
-    end
 
-    # Only allow a list of trusted parameters through.
-    def car_params
-      params.fetch(:car, {})
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_car
+    @car = Car.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def car_params
+    params.require(:car).permit(:brand, :model, :plate_number, :year)
+  end
 end

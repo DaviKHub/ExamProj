@@ -1,41 +1,29 @@
-<h1 class="mb-4">🏁 Список поездок</h1>
+<h1 class="mb-4">🛣️ Список поездок</h1>
 
-<table class="table table-striped">
-  <thead class="table-dark">
-    <tr>
-      <th>Клиент</th>
-      <th>Машина</th>
-      <th>Место посадки</th>
-      <th>Место высадки</th>
-      <th>Стоимость</th>
-      <th>Статус</th>
-      <th>Действия</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @rides.each do |ride| %>
-      <tr>
-        <td><%= ride.client.name %></td>
-        <td><%= ride.car ? "#{ride.car.brand} #{ride.car.model} (#{ride.car.plate_number})" : "🚫 Нет машины" %></td>
-        <td><%= ride.pickup_location %></td>
-        <td><%= ride.dropoff_location %></td>
-        <td><%= ride.fare %> ₽</td>
-        <td>
-          <% if ride.status == "completed" %>
-            <span class="badge bg-success">Завершена</span>
-          <% elsif ride.status == "pending" %>
-            <span class="badge bg-warning text-dark">В ожидании</span>
-          <% else %>
-            <span class="badge bg-danger">Отменена</span>
-          <% end %>
-        </td>
-        <td>
-          <%= link_to "Редактировать", edit_ride_path(ride), class: "btn btn-warning btn-sm" %>
-          <%= link_to "Удалить", ride, method: :delete, data: { confirm: "Вы уверены?" }, class: "btn btn-danger btn-sm" %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="row">
+  <% @rides.each do |ride| %>
+    <div class="col-md-6">
+      <div class="card p-3 mb-4">
+        <div class="card-body">
+          <h5 class="card-title">🛺 Поездка №<%= ride.id %></h5>
+          <p class="card-text">
+            🏁 <strong>Откуда:</strong> <%= ride.pickup_location %> <br>
+            🏁 <strong>Куда:</strong> <%= ride.dropoff_location %> <br>
+            👤 <strong>Клиент:</strong> <%= ride.client.phone %> <br>
+            🚗 <strong>Машина:</strong> <%= ride.car.plate_number %> <br>
+            💰 <strong>Стоимость:</strong> <%= ride.fare %> ₽ <br>
+            🔘 <strong>Статус:</strong> <%= ride.status.capitalize %>
+          </p>
+          <div class="d-flex justify-content-between">
+            <%= link_to "Редактировать", edit_ride_path(ride), class: "btn btn-warning btn-sm" %>
+            <%= link_to "Удалить", ride, method: :delete, data: { confirm: "Вы уверены?" }, class: "btn btn-danger btn-sm" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
 
-<%= link_to "Добавить поездку", new_ride_path, class: "btn btn-success mt-3" %>
+<div class="mt-4">
+  <%= link_to "➕ Добавить поездку", new_ride_path, class: "btn btn-success" %>
+</div>
