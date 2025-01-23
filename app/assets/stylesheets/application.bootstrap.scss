@@ -1,5 +1,6 @@
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons';
+
 // 🎨 Глобальные переменные стилей
 $primary-color: #007bff;
 $secondary-color: #6c757d;
@@ -11,6 +12,10 @@ $dark-bg: #121212;
 $text-dark: #333;
 $text-light: #fff;
 
+body {
+  background-color: $light-bg;
+  color: $text-dark;
+}
 
 .btn {
   border-radius: 6px;
@@ -27,11 +32,45 @@ $text-light: #fff;
 .card {
   border-radius: 12px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 
   &:hover {
     transform: scale(1.02);
+    box-shadow: 0px 6px 14px rgba(0, 0, 0, 0.15);
   }
+
+  .card-body {
+    text-align: center;
+  }
+}
+
+.driver-photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+  object-fit: cover;
+  border: 2px solid $primary-color;
+}
+
+.driver-photo-placeholder {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-color: $secondary-color;
+  color: $text-light;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 10px;
+  font-size: 24px;
+  border: 2px solid $primary-color;
+}
+
+
+.card-title {
+  font-weight: bold;
+  font-size: 1.2rem;
 }
 
 .table {
@@ -60,47 +99,5 @@ $text-light: #fff;
 
   &:hover {
     background-color: $primary-color;
-  }
-}
-
-.card {
-  border-radius: 12px;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-
-  &:hover {
-    transform: scale(1.02);
-    box-shadow: 0px 6px 14px rgba(0, 0, 0, 0.15);
-  }
-}
-
-.card-title {
-  font-weight: bold;
-  font-size: 1.2rem;
-}
-
-.table {
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.table th {
-  background-color: #007bff;
-  color: white;
-}
-
-.table-hover tbody tr:hover {
-  background-color: rgba(0, 0, 0, 0.05);
-}
-
-.btn {
-  border-radius: 6px;
-  padding: 8px 16px;
-  font-weight: bold;
-  transition: all 0.3s ease;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
   }
 }

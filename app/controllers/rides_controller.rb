@@ -1,13 +1,9 @@
 class RidesController < ApplicationController
-  before_action :set_ride, only: %i[ show edit update destroy ]
+  before_action :set_ride, only: %i[edit update destroy]
 
   # GET /rides or /rides.json
   def index
     @rides = Ride.all
-  end
-
-  # GET /rides/1 or /rides/1.json
-  def show
   end
 
   # GET /rides/new
@@ -25,7 +21,7 @@ class RidesController < ApplicationController
 
     respond_to do |format|
       if @ride.save
-        format.html { redirect_to @ride, notice: "Ride was successfully created." }
+        format.html { redirect_to rides_path, notice: "Поездка успешно размещена." }
         format.json { render :show, status: :created, location: @ride }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -38,7 +34,7 @@ class RidesController < ApplicationController
   def update
     respond_to do |format|
       if @ride.update(ride_params)
-        format.html { redirect_to @ride, notice: "Ride was successfully updated." }
+        format.html { redirect_to rides_path, notice: "Поездка успешно обновлена." }
         format.json { render :show, status: :ok, location: @ride }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,7 +48,7 @@ class RidesController < ApplicationController
     @ride.destroy!
 
     respond_to do |format|
-      format.html { redirect_to rides_path, status: :see_other, notice: "Ride was successfully destroyed." }
+      format.html { redirect_to rides_path, status: :see_other, notice: "Поездка успешно удалена." }
       format.json { head :no_content }
     end
   end
@@ -61,7 +57,7 @@ class RidesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_ride
-    @ride = Ride.find(params.expect(:id))
+    @ride = Ride.find(params[:id])
   end
 
   # Only allow a list of trusted parameters through.

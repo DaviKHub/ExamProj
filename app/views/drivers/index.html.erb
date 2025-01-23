@@ -4,7 +4,12 @@
   <% @drivers.each do |driver| %>
     <div class="col-md-6">
       <div class="card p-3 mb-4">
-        <div class="card-body">
+        <div class="card-body text-center">
+          <% if driver.photo.attached? %>
+            <%= image_tag driver.photo.variant(resize_to_fill: [150, 150]), class: "driver-photo" %>
+          <% else %>
+            <div class="driver-photo-placeholder">Нет фото</div>
+          <% end %>
           <h5 class="card-title">🚕 <%= driver.name %></h5>
           <p class="card-text">
             🪪 <strong>Удостоверение:</strong> <%= driver.license_number %><br>
@@ -12,7 +17,7 @@
           </p>
           <div class="d-flex justify-content-between">
             <%= link_to "Редактировать", edit_driver_path(driver), class: "btn btn-warning btn-sm" %>
-            <%= link_to "Удалить", driver, method: :delete, data: { confirm: "Вы уверены?" }, class: "btn btn-danger btn-sm" %>
+            <%= button_to "Удалить", driver_path(driver), method: :delete, data: { confirm: "Вы уверены?" }, class: "btn btn-danger btn-sm" %>
           </div>
         </div>
       </div>

@@ -34,14 +34,12 @@ class DriversController < ApplicationController
 
   # PATCH/PUT /drivers/1 or /drivers/1.json
   def update
-    respond_to do |format|
-      if @driver.update(driver_params)
-        format.html { redirect_to @driver, notice: "Driver was successfully updated." }
-        format.json { render :show, status: :ok, location: @driver }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @driver.errors, status: :unprocessable_entity }
-      end
+    if @driver.update(driver_params)
+      flash[:success] = "Водитель успешно обновлен!"
+      redirect_to drivers_path
+    else
+      flash.now[:danger] = "Ошибка! Проверьте введенные данные."
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -50,20 +48,18 @@ class DriversController < ApplicationController
     @driver.destroy!
 
     respond_to do |format|
-      format.html { redirect_to drivers_path, status: :see_other, notice: "Driver was successfully destroyed." }
+      format.html { redirect_to drivers_path, status: :see_other, notice: "Водитель успешно удален." }
       format.json { head :no_content }
     end
   end
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_driver
-    @driver = Driver.find(params.expect(:id))
+    @driver = Driver.find(params[:id])
   end
 
-  # Only allow a list of trusted parameters through.
   def driver_params
-    params.require(:driver).permit(:name, :license_number, :phone, :car_id)
+    params.require(:driver).permit(:name, :license_number, :phone, :car_id, :photo)
   end
 end
