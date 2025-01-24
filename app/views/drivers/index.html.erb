@@ -13,7 +13,13 @@
           <h5 class="card-title">🚕 <%= driver.name %></h5>
           <p class="card-text">
             🪪 <strong>Удостоверение:</strong> <%= driver.license_number %><br>
-            📞 <strong>Телефон:</strong> <%= driver.phone %>
+            📞 <strong>Телефон:</strong> <%= driver.phone %><br>
+            <% if driver.car.present? %>
+              🚗 <strong>Машина:</strong> <%= driver.car.brand %> <%= driver.car.model %>
+              — <%= driver.car.plate_number %>
+            <% else %>
+              🚗 <strong>Машина:</strong> <em>не назначена</em>
+            <% end %>
           </p>
           <div class="d-flex justify-content-between">
             <%= link_to "Редактировать", edit_driver_path(driver), class: "btn btn-warning btn-sm" %>

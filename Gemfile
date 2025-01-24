@@ -65,3 +65,5 @@ end
 gem "bootstrap", "~> 5.3"
 
 gem "cssbundling-rails", "~> 1.4"
+
+gem 'image_processing', '~> 1.2'

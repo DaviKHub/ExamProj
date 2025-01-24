@@ -3,7 +3,7 @@ class DriversController < ApplicationController
 
   # GET /drivers or /drivers.json
   def index
-    @drivers = Driver.all
+    @drivers = Driver.includes(:car).all
   end
 
   # GET /drivers/1 or /drivers/1.json
@@ -33,6 +33,19 @@ class DriversController < ApplicationController
   end
 
   # PATCH/PUT /drivers/1 or /drivers/1.json
+  #   def update
+  #   if driver_params[:car_id].blank?
+  #     flash.now[:danger] = "Машина должна быть выбрана."
+  #     render :edit, status: :unprocessable_entity
+  #   elsif @driver.update(driver_params)
+  #     flash[:success] = "Водитель успешно обновлен!"
+  #     redirect_to drivers_path
+  #   else
+  #     flash.now[:danger] = "Ошибка! Проверьте введенные данные."
+  #     render :edit, status: :unprocessable_entity
+  #   end
+  # end
+
   def update
     if @driver.update(driver_params)
       flash[:success] = "Водитель успешно обновлен!"
